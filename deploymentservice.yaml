@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apppipe-deployment
+spec:
+  selector:
+    matchLabels:
+      app: apppipe
+  template:
+    metadata:
+      labels:
+        app: apppipe
+    spec:
+      containers:
+        - name: apppipe
+          image: kavusan/apppipe
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8081
+  ----
+apiVersion: v1
+kind: Service
+metadata:
+  name: apppipe-service
+spec:
+  selector:
+    app: apppipe
+  ports:
+    - port: 8081
+      targetPort: 8081
